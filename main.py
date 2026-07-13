@@ -1,7 +1,7 @@
 import flet as ft
 
+from app.layouts.main_layout import main_layout
 from app.theme import colors
-from app.views.dashboard import dashboard
 
 
 def main(page: ft.Page):
@@ -15,9 +15,8 @@ def main(page: ft.Page):
     page.window.width = 1200
     page.window.height = 800
 
-
     page.add(
-        dashboard()
+        main_layout()
     )
 
 
