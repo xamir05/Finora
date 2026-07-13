@@ -1,4 +1,5 @@
 import flet as ft
+from app.theme import colors
 
 
 def StatCard(
@@ -10,7 +11,7 @@ def StatCard(
     return ft.Container(
         width=250,
         height=140,
-        bgcolor="#1F2937",
+        bgcolor=colors.SURFACE,
         border_radius=15,
         padding=20,
         content=ft.Column(
@@ -25,13 +26,13 @@ def StatCard(
                     title,
                     size=16,
                     weight=ft.FontWeight.W_500,
-                    color="white",
+                    color=colors.TEXT_PRIMARY,
                 ),
                 ft.Text(
                     value,
                     size=24,
                     weight=ft.FontWeight.BOLD,
-                    color="white",
+                    color=colors.TEXT_PRIMARY,
                 ),
             ],
         ),
