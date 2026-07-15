@@ -4,7 +4,7 @@ from app.theme import colors
 from app.components.nav_item import NavItem
 
 
-def sidebar():
+def sidebar(controller):
 
     return ft.Container(
         width=250,
@@ -27,32 +27,38 @@ def sidebar():
 
                 NavItem(
                     ft.Icons.DASHBOARD,
-                    "Dashboard"
+                    "Dashboard",
+                    on_click=lambda _: controller.navigate("dashboard"),
                 ),
 
                 NavItem(
                     ft.Icons.ARROW_DOWNWARD,
-                    "Ingresos"
+                    "Ingresos",
+                    on_click=lambda _: controller.navigate("income"),
                 ),
 
                 NavItem(
                     ft.Icons.ARROW_UPWARD,
-                    "Gastos"
+                    "Gastos",
+                    on_click=lambda _: controller.navigate("expenses"),
                 ),
 
                 NavItem(
                     ft.Icons.ACCOUNT_BALANCE,
-                    "Presupuestos"
+                    "Presupuestos",
+                    on_click=lambda _: controller.navigate("budgets"),
                 ),
 
                 NavItem(
                     ft.Icons.INSERT_CHART,
-                    "Reportes"
+                    "Reportes",
+                    on_click=lambda _: controller.navigate("reports"),
                 ),
 
                 NavItem(
                     ft.Icons.SETTINGS,
-                    "Configuración"
+                    "Configuración",
+                    on_click=lambda _: controller.navigate("settings"),
                 ),
 
             ],
