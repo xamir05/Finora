@@ -2,6 +2,8 @@ from typing import Generic, TypeVar
 
 from sqlalchemy.orm import Session
 
+from sqlalchemy import select
+
 ModelType = TypeVar("ModelType")
 
 
@@ -17,3 +19,7 @@ class BaseRepository(Generic[ModelType]):
         self.db.refresh(entity)
 
         return entity
+
+    def get_all(self) -> list[ModelType]:
+        statement = select(self.model)
+        return list(self.db.scalars(statement).all())

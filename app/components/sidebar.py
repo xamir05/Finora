@@ -44,6 +44,12 @@ def sidebar(controller):
                 ),
 
                 NavItem(
+                    ft.Icons.RECEIPT_LONG,
+                    "Transacciones",
+                    on_click=lambda _: controller.navigate("transactions"),
+                ),
+
+                NavItem(
                     ft.Icons.ACCOUNT_BALANCE,
                     "Presupuestos",
                     on_click=lambda _: controller.navigate("budgets"),

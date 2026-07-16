@@ -9,3 +9,6 @@ class TransactionController:
 
     def create_transaction(self, transaction: Transaction) -> Transaction:
         return self.service.create_transaction(transaction)
+
+    def get_transactions(self) -> list[Transaction]:
+        return self.service.get_transactions()

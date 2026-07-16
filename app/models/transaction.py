@@ -5,7 +5,7 @@ from sqlalchemy import Date, DateTime, Enum, Numeric, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.database.database import Base
-from app.models.enums import TransactionType
+from app.enums.transaction_type import TransactionType
 
 
 class Transaction(Base):

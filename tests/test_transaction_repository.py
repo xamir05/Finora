@@ -2,7 +2,7 @@ from datetime import date
 from decimal import Decimal
 
 from app.database.database import SessionLocal
-from app.models.enums import TransactionType
+from app.enums.transaction_type import TransactionType
 from app.models.transaction import Transaction
 from app.repositories.transaction_repository import TransactionRepository
 from app.database.init_db import init_database

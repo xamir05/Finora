@@ -3,7 +3,7 @@ from decimal import Decimal
 
 from app.core.dependencies import Dependencies
 from app.database.init_db import init_database
-from app.models.enums import TransactionType
+from app.enums.transaction_type import TransactionType
 from app.models.transaction import Transaction
 
 
