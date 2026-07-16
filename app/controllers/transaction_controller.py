@@ -1,0 +1,11 @@
+from app.models.transaction import Transaction
+from app.services.transaction_service import TransactionService
+
+
+class TransactionController:
+
+    def __init__(self, service: TransactionService):
+        self.service = service
+
+    def create_transaction(self, transaction: Transaction) -> Transaction:
+        return self.service.create_transaction(transaction)

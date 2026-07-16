@@ -1,18 +1,10 @@
 from sqlalchemy.orm import Session
+
 from app.models.transaction import Transaction
+from app.repositories.base_repository import BaseRepository
 
 
-class TransactionRepository:
+class TransactionRepository(BaseRepository[Transaction]):
 
     def __init__(self, db: Session):
-        self.db = db
-
-
-    def create(self, transaction: Transaction) -> Transaction:
-        """
-        Guarda una transacción en la base de datos.
-        """
-        self.db.add(transaction)
-        self.db.commit()
-        self.db.refresh(transaction)
-        return transaction
+        super().__init__(db, Transaction)
