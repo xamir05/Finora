@@ -6,7 +6,9 @@ from app.theme import colors
 from app.database.init_db import init_database
 
 
+
 def main(page: ft.Page):
+
 
     page.title = "Finora"
 
@@ -14,21 +16,29 @@ def main(page: ft.Page):
 
     page.bgcolor = colors.BACKGROUND
 
+
     page.window.width = 1200
     page.window.height = 800
 
+
     init_database()
+
 
     controller = AppController()
 
-    # Vista inicial
-    controller.content.content = controller.routes["dashboard"]()
+
+    controller.content.content = (
+        controller.routes["dashboard"]()
+    )
+
 
     page.add(
         main_layout(controller)
     )
 
+
     page.update()
+
 
 
 ft.run(main)

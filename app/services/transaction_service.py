@@ -12,3 +12,10 @@ class TransactionService:
 
     def get_transactions(self) -> list[Transaction]:
         return self.repository.get_all()
+
+    def get_latest_transactions(
+            self,
+            limit: int = 20,  
+    )   ->  list[Transaction]:
+
+        return self.repository.get_latest(limit)
