@@ -24,3 +24,13 @@ class DescriptionField:
 
     def get_value(self):
         return self.field.value
+
+    def set_value(self, value: str):
+
+        self.field.value = value
+        self.field.update()
+
+    def clear(self):
+
+        self.field.value = ""
+        self.field.update()

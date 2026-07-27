@@ -28,4 +28,18 @@ class AmountField:
         return self.field
 
     def get_value(self):
-        return self.field.value
+
+        if not self.field.value:
+            return 0
+
+        return float(self.field.value)
+
+    def set_value(self, value: float):
+
+        self.field.value = str(value)
+        self.field.update()
+
+    def clear(self):
+
+        self.field.value = ""
+        self.field.update()

@@ -28,3 +28,13 @@ class CategoryDropdown:
 
     def get_value(self):
         return self.dropdown.value
+
+    def set_value(self, value: str):
+
+        self.dropdown.value = value
+        self.dropdown.update()
+
+    def clear(self):
+
+        self.dropdown.value = None
+        self.dropdown.update()

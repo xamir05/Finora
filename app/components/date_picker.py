@@ -31,21 +31,21 @@ class DatePicker:
             on_click=self.open_picker,
         )
 
-
     def open_picker(self, e):
 
         page = self.field.page
 
         if page:
-            page.overlay.append(self.picker)
+
+            if self.picker not in page.overlay:
+                page.overlay.append(self.picker)
 
             self.picker.open = True
             page.update()
 
-
     def close_picker(self, e):
-        self.picker.open = False
 
+        self.picker.open = False
 
     def change_date(self, e):
 
@@ -53,18 +53,30 @@ class DatePicker:
 
             self.selected_date = e.control.value.date()
 
-            self.field.value = (
-                self.selected_date.strftime("%d/%m/%Y")
-            )
+            self.field.value = self.selected_date.strftime("%d/%m/%Y")
 
             self.field.update()
-
 
     def get_control(self):
 
         return self.field
 
-
     def get_value(self):
 
         return self.selected_date
+
+    def set_value(self, value: date):
+
+        self.selected_date = value
+
+        self.field.value = value.strftime("%d/%m/%Y")
+
+        self.field.update()
+
+    def clear(self):
+
+        self.selected_date = date.today()
+
+        self.field.value = self.selected_date.strftime("%d/%m/%Y")
+
+        self.field.update()

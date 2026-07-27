@@ -7,9 +7,16 @@ from app.theme import colors
 
 class TransactionCard:
 
-    def __init__(self, transaction: Transaction):
+    def __init__(
+        self,
+        transaction: Transaction,
+        on_edit=None,
+        on_delete=None,
+    ):
 
         self.transaction = transaction
+        self.on_edit = on_edit
+        self.on_delete = on_delete
 
     def build(self):
 
@@ -32,54 +39,86 @@ class TransactionCard:
             border_radius=12,
             padding=15,
 
-            content=ft.Row(
-                alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+            content=ft.Column(
+                spacing=12,
 
                 controls=[
 
                     ft.Row(
-                        spacing=15,
+                        alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
 
                         controls=[
 
-                            ft.Icon(
-                                icon,
-                                color=icon_color,
-                                size=28,
-                            ),
+                            ft.Row(
 
-                            ft.Column(
-                                spacing=3,
-                                alignment=ft.MainAxisAlignment.CENTER,
+                                spacing=15,
 
                                 controls=[
 
-                                    ft.Text(
-                                        self.transaction.category,
-                                        weight=ft.FontWeight.BOLD,
-                                        color=colors.TEXT_PRIMARY,
+                                    ft.Icon(
+                                        icon,
+                                        color=icon_color,
+                                        size=28,
                                     ),
 
-                                    ft.Text(
-                                        self.transaction.description,
-                                        color=colors.TEXT_SECONDARY,
-                                        size=13,
-                                    ),
+                                    ft.Column(
 
-                                    ft.Text(
-                                        self.transaction.date.strftime("%d/%m/%Y"),
-                                        size=12,
-                                        color=colors.TEXT_SECONDARY,
+                                        spacing=3,
+
+                                        controls=[
+
+                                            ft.Text(
+                                                self.transaction.category,
+                                                weight=ft.FontWeight.BOLD,
+                                                color=colors.TEXT_PRIMARY,
+                                            ),
+
+                                            ft.Text(
+                                                self.transaction.description,
+                                                color=colors.TEXT_SECONDARY,
+                                                size=13,
+                                            ),
+
+                                            ft.Text(
+                                                self.transaction.date.strftime("%d/%m/%Y"),
+                                                size=12,
+                                                color=colors.TEXT_SECONDARY,
+                                            ),
+                                        ],
                                     ),
                                 ],
+                            ),
+
+                            ft.Text(
+                                amount,
+                                weight=ft.FontWeight.BOLD,
+                                color=icon_color,
                             ),
                         ],
                     ),
 
-                    ft.Text(
-                        amount,
-                        weight=ft.FontWeight.BOLD,
-                        color=icon_color,
+                    ft.Row(
+
+                        alignment=ft.MainAxisAlignment.END,
+
+                        controls=[
+
+                            ft.TextButton(
+                                "Editar",
+                                icon=ft.Icons.EDIT,
+                                on_click=lambda e: self.on_edit(self.transaction)
+                                if self.on_edit
+                                else None,
+                            ),
+
+                            ft.TextButton(
+                                "Eliminar",
+                                icon=ft.Icons.DELETE,
+                                on_click=lambda e: self.on_delete(self.transaction)
+                                if self.on_delete
+                                else None,
+                            ),
+                        ],
                     ),
                 ],
             ),

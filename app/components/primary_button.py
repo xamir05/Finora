@@ -3,31 +3,48 @@ import flet as ft
 from app.theme import colors
 
 
-def PrimaryButton(
-    text: str,
-    on_click=None,
-    width: int = 220,
-    icon=None,
-):
+class PrimaryButton:
 
-    return ft.ElevatedButton(
-        content=ft.Text(
+    def __init__(
+        self,
+        text: str,
+        on_click=None,
+        width: int = 220,
+        icon=None,
+    ):
+
+        self.text_control = ft.Text(
             text,
             color="white",
-        ),
+        )
 
-        icon=icon,
+        self.button = ft.ElevatedButton(
 
-        width=width,
-        height=48,
+            content=self.text_control,
 
-        bgcolor=colors.PRIMARY,
+            icon=icon,
 
-        style=ft.ButtonStyle(
-            shape=ft.RoundedRectangleBorder(
-                radius=10,
+            width=width,
+            height=48,
+
+            bgcolor=colors.PRIMARY,
+
+            style=ft.ButtonStyle(
+                shape=ft.RoundedRectangleBorder(
+                    radius=10,
+                ),
             ),
-        ),
 
-        on_click=on_click,
-    )
+            on_click=on_click,
+        )
+
+
+    def get_control(self):
+
+        return self.button
+
+
+    def set_text(self, text: str):
+
+        self.text_control.value = text
+        self.text_control.update()

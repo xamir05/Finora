@@ -17,5 +17,16 @@ class TransactionController:
         self,
         limit: int = 20,
     ) -> list[Transaction]:
-
         return self.service.get_latest_transactions(limit)
+
+    def get_transaction_by_id(
+        self,
+        transaction_id: int,
+    ) -> Transaction | None:
+        return self.service.get_transaction_by_id(transaction_id)
+
+    def update_transaction(self, transaction: Transaction) -> Transaction:
+        return self.service.update_transaction(transaction)
+
+    def delete_transaction(self, transaction: Transaction) -> None:
+        self.service.delete_transaction(transaction)
