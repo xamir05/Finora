@@ -211,7 +211,13 @@ class TransactionsView:
 
     def delete_transaction(self, transaction: Transaction):
 
-        print(f"Eliminar transacción {transaction.id}")    
+        self.controller.delete_transaction(transaction)
+
+        print(f"Eliminar transacción {transaction.id}")
+
+        self.load_transactions()
+
+        self.content.update()    
 
 
     def clear_form(self):
