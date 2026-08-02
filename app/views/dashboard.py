@@ -17,6 +17,10 @@ class DashboardView:
         income = controller.get_total_income()
         expenses = controller.get_total_expenses()
 
+        transaction_count = controller.count_transactions()
+        average_amount = controller.get_average_amount()
+        max_expense = controller.get_max_expense()
+
         latest_transactions = controller.get_latest_transactions(5)
 
         self.content = ft.Container(
@@ -62,6 +66,42 @@ class DashboardView:
                             ).build(),
                         ],
                     ),
+
+
+                    ft.Row(
+                        spacing=20,
+                        controls=[
+
+                            SummaryCard(
+                                title="Transacciones",
+                                value=str(transaction_count),
+                                icon=ft.Icons.RECEIPT_LONG,
+                                icon_color=colors.PRIMARY,
+                                subtitle="Movimientos registrados",
+                            ).build(),
+
+                            SummaryCard(
+                                title="Promedio",
+                                value=f"RD$ {average_amount:,.2f}",
+                                icon=ft.Icons.ANALYTICS,
+                                icon_color=colors.SECONDARY,
+                                subtitle="Promedio por movimiento",
+                            ).build(),
+
+                             SummaryCard(
+                                title="Mayor gasto",
+                                value=f"RD$ {max_expense:,.2f}",
+                                icon=ft.Icons.WARNING_AMBER,
+                                icon_color=colors.ERROR,
+                                subtitle="Gasto individual más alto",
+                            ).build(),
+
+                            ft.Container(expand=True),
+
+                        ],
+                    ),
+
+
 
                     ft.Divider(),
 

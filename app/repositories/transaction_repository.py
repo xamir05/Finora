@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from app.enums.transaction_type import TransactionType
 from app.models.transaction import Transaction
 from app.repositories.base_repository import BaseRepository
-
+from sqlalchemy import func, select
 
 class TransactionRepository(BaseRepository[Transaction]):
 
@@ -59,3 +59,33 @@ class TransactionRepository(BaseRepository[Transaction]):
             self.get_total_income()
             - self.get_total_expenses()
         )
+
+    def count_transactions(self) -> int:
+
+        statement = select(
+            func.count(Transaction.id)
+        )
+
+        return self.db.scalar(statement) or 0
+
+    def get_average_amount(self) -> float:
+
+        statement = select(
+            func.avg(Transaction.amount)
+        )
+
+        average = self.db.scalar(statement)
+
+        return float(average or 0)
+
+    def get_max_expense(self) -> float:
+
+         statement = select(
+             func.max(Transaction.amount)
+         ).where(
+             Transaction.transaction_type == "EXPENSE"
+         )
+
+         maximum = self.db.scalar(statement)
+
+         return float(maximum or 0)
