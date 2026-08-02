@@ -4,6 +4,7 @@ from app.controllers.app_controller import AppController
 from app.layouts.main_layout import main_layout
 from app.theme import colors
 from app.database.init_db import init_database
+from app.views.dashboard import DashboardView
 
 
 
@@ -27,9 +28,9 @@ def main(page: ft.Page):
     controller = AppController()
 
 
-    controller.content.content = (
-        controller.routes["dashboard"]()
-    )
+    controller.content.content = DashboardView(
+        controller.transaction_controller
+    ).build()
 
 
     page.add(

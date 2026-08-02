@@ -1,6 +1,6 @@
 import flet as ft
 
-from app.views.dashboard import dashboard
+from app.views.dashboard import DashboardView
 from app.views.income import income
 from app.views.expenses import expenses
 from app.views.budgets import budgets
@@ -36,7 +36,7 @@ class AppController:
         )
 
         self.routes = {
-            "dashboard": dashboard,
+            "dashboard": DashboardView,
             "income": income,
             "expenses": expenses,
             "transactions": self.transactions_view,
@@ -61,8 +61,20 @@ class AppController:
 
         view = self.routes.get(route)
 
-        if view:
+        if not view:
+            return
 
+        if route == "dashboard":
+
+            self.content.content = DashboardView(
+                self.transaction_controller
+            ).build()
+
+        elif route == "transactions":
+
+            self.content.content = self.transactions_view()
+
+        else:
             self.content.content = view()
 
             self.content.update()

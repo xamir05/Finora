@@ -1,6 +1,7 @@
 from app.models.transaction import Transaction
 
 from app.repositories.transaction_repository import TransactionRepository
+from decimal import Decimal
 
 class TransactionService:
 
@@ -26,3 +27,12 @@ class TransactionService:
 
     def get_transaction_by_id(self, transaction_id: int) -> Transaction | None:
         return self.repository.get_by_id(transaction_id)
+
+    def get_total_income(self) -> Decimal:
+        return self.repository.get_total_income()
+
+    def get_total_expenses(self) -> Decimal:
+        return self.repository.get_total_expenses()
+
+    def get_balance(self) -> Decimal:
+        return self.repository.get_balance()

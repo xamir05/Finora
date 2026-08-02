@@ -1,5 +1,6 @@
 from app.models.transaction import Transaction
 from app.services.transaction_service import TransactionService
+from decimal import Decimal
 
 
 class TransactionController:
@@ -30,3 +31,17 @@ class TransactionController:
 
     def delete_transaction(self, transaction: Transaction) -> None:
         self.service.delete_transaction(transaction)
+
+    def get_total_income(self) -> Decimal:
+
+        return self.service.get_total_income()
+
+
+    def get_total_expenses(self) -> Decimal:
+
+        return self.service.get_total_expenses()
+
+
+    def get_balance(self) -> Decimal:
+
+        return self.service.get_balance()
