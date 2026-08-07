@@ -1,10 +1,9 @@
 import flet as ft
 
+from app.components.financial_chart import FinancialChart
 from app.components.dashboard_header import DashboardHeader
-from app.components.summary_card import SummaryCard
-from app.components.dashboard_chart import DashboardChart
 from app.components.recent_transactions import RecentTransactions
-from app.components.transaction_list import TransactionList
+from app.components.summary_card import SummaryCard
 
 from app.theme import colors
 
@@ -15,34 +14,57 @@ class DashboardView:
 
         self.controller = controller
 
-        balance = controller.get_balance()
-        income = controller.get_total_income()
-        expenses = controller.get_total_expenses()
+        # Estadísticas
+        dashboard = controller.get_dashboard_data()
 
-        transaction_count = controller.count_transactions()
-        average_amount = controller.get_average_amount()
-        max_expense = controller.get_max_expense()
+        balance = dashboard["balance"]
+        income = dashboard["income"]
+        expenses = dashboard["expenses"]
 
-        latest_transactions = controller.get_latest_transactions(5)
+        transaction_count = dashboard["transaction_count"]
+        average_amount = dashboard["average_amount"]
+        max_expense = dashboard["max_expense"]
+
+        latest_transactions = dashboard["latest_transactions"]
 
         self.content = ft.Container(
+
             expand=True,
+
             padding=30,
+
             bgcolor=colors.BACKGROUND,
 
             content=ft.Column(
+
                 spacing=25,
+
                 scroll=ft.ScrollMode.AUTO,
 
                 controls=[
+
                     DashboardHeader().build(),
 
+
+                    # ==========================
+                    # Tarjetas principales
+                    # ==========================
+
                     ft.ResponsiveRow(
+
                         spacing=20,
+
                         run_spacing=20,
+
                         controls=[
+
                             ft.Container(
-                                col={"xs": 12, "md": 4},
+
+                                col={
+                                    "xs": 12,
+                                    "md": 4,
+                                },
+
                                 content=SummaryCard(
                                     title="Balance",
                                     value=f"RD$ {balance:,.2f}",
@@ -51,8 +73,14 @@ class DashboardView:
                                     subtitle="Balance disponible",
                                 ).build(),
                             ),
+
                             ft.Container(
-                                col={"xs": 12, "md": 4},
+
+                                col={
+                                    "xs": 12,
+                                    "md": 4,
+                                },
+
                                 content=SummaryCard(
                                     title="Ingresos",
                                     value=f"RD$ {income:,.2f}",
@@ -61,8 +89,14 @@ class DashboardView:
                                     subtitle="Total de ingresos",
                                 ).build(),
                             ),
+
                             ft.Container(
-                                col={"xs": 12, "md": 4},
+
+                                col={
+                                    "xs": 12,
+                                    "md": 4,
+                                },
+
                                 content=SummaryCard(
                                     title="Gastos",
                                     value=f"RD$ {expenses:,.2f}",
@@ -71,15 +105,30 @@ class DashboardView:
                                     subtitle="Total de gastos",
                                 ).build(),
                             ),
+
                         ],
                     ),
 
+
+                    # ==========================
+                    # Tarjetas secundarias
+                    # ==========================
+
                     ft.ResponsiveRow(
+
                         spacing=20,
+
                         run_spacing=20,
+
                         controls=[
+
                             ft.Container(
-                                col={"xs": 12, "md": 4},
+
+                                col={
+                                    "xs": 12,
+                                    "md": 4,
+                                },
+
                                 content=SummaryCard(
                                     title="Transacciones",
                                     value=str(transaction_count),
@@ -88,8 +137,14 @@ class DashboardView:
                                     subtitle="Movimientos registrados",
                                 ).build(),
                             ),
+
                             ft.Container(
-                                col={"xs": 12, "md": 4},
+
+                                col={
+                                    "xs": 12,
+                                    "md": 4,
+                                },
+
                                 content=SummaryCard(
                                     title="Promedio",
                                     value=f"RD$ {average_amount:,.2f}",
@@ -98,8 +153,14 @@ class DashboardView:
                                     subtitle="Promedio por movimiento",
                                 ).build(),
                             ),
+
                             ft.Container(
-                                col={"xs": 12, "md": 4},
+
+                                col={
+                                    "xs": 12,
+                                    "md": 4,
+                                },
+
                                 content=SummaryCard(
                                     title="Mayor gasto",
                                     value=f"RD$ {max_expense:,.2f}",
@@ -108,23 +169,57 @@ class DashboardView:
                                     subtitle="Gasto individual más alto",
                                 ).build(),
                             ),
+
                         ],
                     ),
 
                     ft.Divider(),
 
+
+                    # ==========================
+                    # Gráfico + Transacciones
+                    # ==========================
+
                     ft.ResponsiveRow(
+
                         spacing=20,
-                        expand=True,
+
+                        run_spacing=20,
+
                         controls=[
-                            DashboardChart().build(),
-                            RecentTransactions(transactions=latest_transactions).build(),
+
+                            ft.Container(
+
+                                col={
+                                    "xs": 12,
+                                    "lg": 6,
+                                },
+
+                                content=FinancialChart(
+                                    income=income,
+                                    expenses=expenses,
+                                    balance=balance,
+                                ).build(),
+                            ),
+
+                            ft.Container(
+
+                                col={
+                                    "xs": 12,
+                                    "lg": 6,
+                                },
+
+                                content=RecentTransactions(
+                                    transactions=latest_transactions,
+                                ).build(),
+                            ),
+
                         ],
                     ),
+
                 ],
             ),
         )
-
 
     def build(self):
 

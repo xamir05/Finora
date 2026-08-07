@@ -57,3 +57,23 @@ class TransactionController:
     def get_max_expense(self) -> float:
 
         return self.service.get_max_expense()
+
+    def get_dashboard_data(self) -> dict[str, Decimal | int | float | list[Transaction]]:
+
+        return {
+
+            "balance": self.get_balance(),
+
+            "income": self.get_total_income(),
+
+            "expenses": self.get_total_expenses(),
+
+            "transaction_count": self.count_transactions(),
+
+            "average_amount": self.get_average_amount(),
+
+            "max_expense": self.get_max_expense(),
+
+            "latest_transactions": self.get_latest_transactions(5),
+
+        }
