@@ -26,6 +26,7 @@ class DashboardView:
         max_expense = dashboard["max_expense"]
 
         latest_transactions = dashboard["latest_transactions"]
+        monthly_totals = dashboard["monthly_totals"]
 
         self.content = ft.Container(
 
@@ -184,7 +185,7 @@ class DashboardView:
 
                         spacing=20,
 
-                        run_spacing=20,
+                        run_spacing=30,
 
                         controls=[
 
@@ -192,13 +193,11 @@ class DashboardView:
 
                                 col={
                                     "xs": 12,
-                                    "lg": 6,
+                                    "lg": 7,
                                 },
 
                                 content=FinancialChart(
-                                    income=income,
-                                    expenses=expenses,
-                                    balance=balance,
+                                    monthly_totals=monthly_totals,
                                 ).build(),
                             ),
 
@@ -206,7 +205,7 @@ class DashboardView:
 
                                 col={
                                     "xs": 12,
-                                    "lg": 6,
+                                    "lg": 5,
                                 },
 
                                 content=RecentTransactions(

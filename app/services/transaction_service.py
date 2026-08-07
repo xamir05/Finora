@@ -48,3 +48,7 @@ class TransactionService:
     def get_max_expense(self) -> float:
 
         return self.repository.get_max_expense()
+
+    def get_monthly_totals(self) -> list[dict]:
+
+        return self.repository.get_monthly_totals()

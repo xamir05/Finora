@@ -89,3 +89,61 @@ class TransactionRepository(BaseRepository[Transaction]):
          maximum = self.db.scalar(statement)
 
          return float(maximum or 0)
+
+    def get_monthly_totals(self) -> list[dict]:
+
+        month = func.strftime(
+            "%Y-%m",
+            Transaction.date,
+        )
+
+        statement = (
+            select(
+                month.label("month"),
+                Transaction.transaction_type,
+                func.sum(Transaction.amount).label("total"),
+            )
+            .group_by(
+                month,
+                Transaction.transaction_type,
+            )
+            .order_by(month)
+        )
+
+        results = self.db.execute(statement).all()
+
+        monthly_data = {}
+
+        for row in results:
+
+            month_name = row.month
+
+            if month_name not in monthly_data:
+                monthly_data[month_name] = {
+                    "income": Decimal("0.00"),
+                "expenses": Decimal("0.00"),
+                }
+
+            transaction_type = row.transaction_type
+            total = row.total or Decimal("0.00")
+
+            if (
+                transaction_type == TransactionType.INCOME
+                or transaction_type == TransactionType.INCOME.value
+            ):
+                monthly_data[month_name]["income"] = total
+
+            elif (
+                transaction_type == TransactionType.EXPENSE
+                or transaction_type == TransactionType.EXPENSE.value
+            ):
+                monthly_data[month_name]["expenses"] = total
+
+        return [
+            {
+                "month": month_name,
+                "income": data["income"],
+                "expenses": data["expenses"],
+            }
+            for month_name, data in monthly_data.items()
+        ]
